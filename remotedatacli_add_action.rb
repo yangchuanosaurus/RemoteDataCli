@@ -2,7 +2,7 @@ require_relative 'remotedatacli_handler'
 
 module RemoteDataCli
 
-	class Creator < Handler
+	class AddAction < Handler
 
 		def initialize(command)
 			@command = command
@@ -11,9 +11,7 @@ module RemoteDataCli
 		# def execute
 		# 	p "#{@command.action} execute #{@command.parameters}"
 		# end
+
 	end
 
 end
-
-# creator = RemoteDataCli::Creator.new("app")
-# puts creator

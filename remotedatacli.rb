@@ -1,19 +1,14 @@
 #!/usr/bin/env ruby
 
-require_relative 'remotedatacli_create.rb'
+require_relative 'remotedatacli_command.rb'
 
 puts "Cli of RemoteData"
-
-@accept_commands = {
-	"create" => "RemoteDataCli::Creator", 
-	"add" => "add_handler"
-}
 
 def command_usage
 
 	puts 'What\'s command you will use?'
 
-	@accept_commands.each do |command, handler|
+	RemoteDataCli::Accept_commands.each do |command, handler|
 		puts "\t#{command}"
 	end
 
@@ -25,16 +20,14 @@ if ARGV.length == 0
 	command_usage
 	
 else
-
+	
 	# find related handler of the command_input
-	command_input = ARGV[0].downcase
+	command = RemoteDataCli::Command.new(*ARGV)
+	command_handler = command.handler
 
-	if @accept_commands.key?(command_input)
+	if !command_handler.nil?
 
-		handler_str = @accept_commands[command_input]
-		
-		handler = RemoteDataCli::Creator.new('App')
-		puts "#{command_input} by #{handler}"
+		command_handler.execute
 
 	else
 
