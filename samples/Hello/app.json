@@ -1,6 +1,22 @@
 {
-	"name": "Hello", 
+	"name": "HelloApp", 
+	
 	"version": 1, 
+	"author": "Albert Zhao",
+	"email": "xaduke@gmail.com",
+	"organization": "Zero Soft Design", 
 	"message": "Hello RemoteDataCli",
-	"template": ""
+
+	"template-center": {
+		"url": ""
+	}, 
+	"dependencies": {
+		"remote-data-android": 1
+	}, 
+
+	"project": {
+		"src": "src/main/java", 
+		"test": "src/test/java", 
+		"resource": "src/main/resources"
+	}
 }
