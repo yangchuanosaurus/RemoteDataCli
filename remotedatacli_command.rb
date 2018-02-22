@@ -1,5 +1,5 @@
-require_relative 'remotedatacli_create.rb'
-require_relative 'remotedatacli_add_action.rb'
+require_relative 'remotedatacli_create'
+require_relative 'remotedatacli_add_action'
 
 module RemoteDataCli
 
@@ -58,7 +58,7 @@ module RemoteDataCli
 
 end
 
-# command = RemoteDataCli::Command.new("create", "app")
+command = RemoteDataCli::Command.new("create", "app")
 # handle = command.handler
 # handle.execute
 

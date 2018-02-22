@@ -1,0 +1,16 @@
+{
+	"name": "app", 
+	
+	"version": 1, 
+	"author": "Albert Zhao",
+	"email": "xaduke@gmail.com",
+	"organization": "Zero Soft Design", 
+	"message": "Hello RemoteDataCli",
+
+	"template-center": {
+		"url": ""
+	}, 
+	"dependencies": {
+		"remote-data-android": 1
+	}
+}

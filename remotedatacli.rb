@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'remotedatacli_command.rb'
+require_relative 'remotedatacli_command'
 
 puts "Cli of RemoteData"
 
@@ -27,7 +27,7 @@ else
 
 	if !command_handler.nil?
 
-		command_handler.execute
+		puts "\t#{command_handler.execute}"
 
 	else
 

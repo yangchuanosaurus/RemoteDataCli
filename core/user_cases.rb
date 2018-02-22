@@ -14,6 +14,11 @@ remotedatacli add host product_url=http://www.xyz.com qa_url=http://qa.xyz.com
 project.add_action(:post, "/events", headers = [], requests = {})
 ??? remotedatacli add action post "/events" headers=a=b
 
+# Configure workflow of action
+project.run_action("qa_login_url", :post, "/login")
+		.response(cookies)
+		.run_action("qa_url", :post, "events")
+
 # Run action test
 project.run_action("qa_url", :post, "/events")
 remotedatacli run qa_url post events
@@ -38,3 +43,30 @@ remotedatacli gen lib
 # start local server for a proxy
 project.create_proxy(default_ip: localhost, default_port = 8088).start
 remotedatacli run_as_proxy localhost 8080
+
+class Order
+	security
+	quantity
+	limit_price
+	all_or_none
+	value
+	bought_or_sold
+
+	def buy
+	end
+
+	def sell
+	end
+end
+
+newOrder.to.buy(100.shares.of('IBM')) {
+	limitPrice 300
+	allOrNOne true
+	valueAs (qty, unitPrice -> qty * unitPrice - 500 )
+}
+
+Order.new.buy(100.shares.of('IBM')) {
+	:limitPrice => 300, 
+	:allOrNone => true, b
+	valueAs { |qty, unitPrice| qty * unitPrice - 500 }
+}
