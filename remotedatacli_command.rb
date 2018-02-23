@@ -4,13 +4,13 @@ require_relative 'remotedatacli_add_action'
 module RemoteDataCli
 
 	RemoteDataCli::Accept_commands = {
-		"create" => "RemoteDataCli::Creator", 
-		"add" => "RemoteDataCli::AddAction"
+		"new" => "RemoteDataCli::Creator", 
+		"add_action" => "RemoteDataCli::AddAction"
 	}
 
 	RemoteDataCli::Accept_commands_argv_size = {
-		"create" => 2, 
-		"add" => 3
+		"new" => 2, 
+		"add_action" => 3
 	}
 
 	class Command

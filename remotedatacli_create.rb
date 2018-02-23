@@ -16,11 +16,13 @@ module RemoteDataCli
 				project_content = template_content.gsub('$project_name', @command.parameters[0])
 
 				Core::FileIO.init_file(project_file, project_content)
+				puts "Create a rest project"
+				return "#{project_file} created."
 			rescue Exception => error
 				puts "#{@command.action} #{project_file} with #{error}"
+				return "#{project_file} creating failed."
 			end
-
-			"#{project_file} created."
+			
 		end
 	end
 

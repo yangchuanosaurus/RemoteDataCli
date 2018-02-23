@@ -7,6 +7,17 @@ module RemoteDataCli
 					file.puts content
 				end
 			end
+
+			def self.create_directories(path)
+				dirname = File.dirname(path)
+				tokens = dirname.split(/[\/\\]/)
+				1.upto(tokens.size) do |n|
+				  dir = tokens[0...n]
+				  dir = dir.join("/")
+				  Dir.mkdir(dir) unless Dir.exist?(dir)
+				end
+				tokens[0...tokens.size].join('/')
+			end
 		end
 	end
 end

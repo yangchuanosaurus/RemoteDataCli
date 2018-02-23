@@ -2,8 +2,6 @@
 
 require_relative 'remotedatacli_command'
 
-puts "Cli of RemoteData"
-
 def command_usage
 
 	puts 'What\'s command you will use?'

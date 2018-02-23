@@ -1,0 +1,20 @@
+{
+	"path": "/rest/events", 
+	"http_method": "post", 
+	
+	"queries": {
+		"query": "value"
+	},
+
+	"headers": {
+		"content-type": "application/json; charset=utf-8"
+	}, 
+
+	"body_form": {
+		"key": "value"
+	}, 
+
+	"request_conf": "actions/rest/events_post_request.json", 
+
+	"response_conf": "actions/rest/events_post_response.json"
+}
