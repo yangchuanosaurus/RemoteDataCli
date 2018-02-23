@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+
 Gem::Specification.new do |s|
   s.name        = 'remotedatacli'
   s.version     = '0.0.0'
@@ -6,17 +9,13 @@ Gem::Specification.new do |s|
   s.description = "RemoteDataCli help a restful service communication."
   s.authors     = ["Albert Yangchuanosaurus Zhao"]
   s.email       = '355592261@qq.com'
-  s.files       = ["lib/remotedatacli.rb", 
-    "lib/command.rb", 
-    "lib/handler.rb", 
-    "lib/handler_new.rb", 
-    "lib/handler_add_action.rb", 
-    "lib/cli/file_io.rb", 
-    "lib/cli/templates.rb"]
+  #s.files       = Dir['lib/   *.rb'] + Dir['bin/*'] + Dir['templates/*']
+  s.files       = `git ls-files`.split("\n")
+
   s.executables << 'remotedatacli'
   s.homepage    =
     'http://rubygems.org/gems/remotedatacli'
-  s.license       = 'MIT'
+  s.license     = 'MIT'
 
   s.required_ruby_version = '>= 2.0.0'
 end
