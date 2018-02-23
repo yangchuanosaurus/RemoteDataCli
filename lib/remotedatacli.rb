@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'remotedatacli_command'
+require_relative 'command'
 
 def command_usage
 

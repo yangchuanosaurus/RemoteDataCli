@@ -1,5 +1,5 @@
-require_relative 'remotedatacli_create'
-require_relative 'remotedatacli_add_action'
+require_relative 'handler_new'
+require_relative 'handler_add_action'
 
 module RemoteDataCli
 

@@ -1,6 +1,6 @@
-require_relative 'remotedatacli_handler'
-require_relative 'core/cli/templates'
-require_relative 'core/cli/file_io'
+require_relative 'handler'
+require_relative 'cli/templates'
+require_relative 'cli/file_io'
 
 module RemoteDataCli
 
