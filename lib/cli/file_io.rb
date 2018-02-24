@@ -23,6 +23,14 @@ module RemoteDataCli
 				Dir.mkdir(name) unless Dir.exist?(name)
 				name
 			end
+
+			def self.file_exists?(file)
+				File.exist?(file)
+			end
+
+			def self.load_content(file)
+				File.read(file)
+			end
 		end
 	end
 end

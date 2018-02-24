@@ -1,0 +1,14 @@
+{
+	"path": "/misc", 
+	"http_method": "get", 
+	
+	"queries": {
+		"action": "getActiveAndroidAppData"
+	},
+
+	"headers": {
+		"content-type": "application/json; charset=utf-8"
+	}, 
+
+	"response_conf": "actions/misc_get_response.json"
+}

@@ -1,16 +1,19 @@
 require_relative 'handler_new'
 require_relative 'handler_add_action'
+require_relative 'handler_run'
 
 module RemoteDataCli
 
 	RemoteDataCli::Accept_commands = {
 		"new" => "RemoteDataCli::Creator", 
-		"add_action" => "RemoteDataCli::AddAction"
+		"add_action" => "RemoteDataCli::AddAction", 
+		"run" => "RemoteDataCli::RunAction"
 	}
 
 	RemoteDataCli::Accept_commands_argv_size = {
 		"new" => 2, 
-		"add_action" => 3
+		"add_action" => 3, 
+		"run" => 2 # cli run rest misc_get
 	}
 
 	class Command
