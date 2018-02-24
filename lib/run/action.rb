@@ -1,4 +1,7 @@
+require 'json'
+
 require_relative '../cli/file_io'
+require_relative '../api/api'
 
 module RemoteDataCli
 	module Run
@@ -16,6 +19,19 @@ module RemoteDataCli
 					puts "#{@action_file} doesn't exists."
 				else
 					content = RemoteDataCli::Core::FileIO.load_content(@action_file)
+					data_hash = JSON.parse(content)
+
+					http_method = data_hash['http_method']
+
+					path = data_hash['path']
+					headers = data_hash['headers']
+					params = data_hash['queries']
+
+					url = "https://awmobile-vip.qa.aw.dev.activenetwork.com/misc"
+					api = RemoteDataCli::Api::ClientApi.new
+					api.get(url, path, headers, params)
+					
+					"run #{http_method} #{path} done."
 				end
 			end
 		end
