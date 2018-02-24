@@ -18,6 +18,11 @@ module RemoteDataCli
 				end
 				tokens[0...tokens.size].join('/')
 			end
+
+			def self.create_directory(name)
+				Dir.mkdir(name) unless Dir.exist?(name)
+				name
+			end
 		end
 	end
 end
