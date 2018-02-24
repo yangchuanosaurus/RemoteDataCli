@@ -12,7 +12,7 @@ module RemoteDataCli
 
 			# Initialize a file with content from template
 			begin
-				template_content = Template.load('templates/project_conf.json')
+				template_content = Template.load('project_conf.json')
 				project_content = template_content.gsub('$project_name', @command.parameters[0])
 
 				Core::FileIO.init_file(project_file, project_content)

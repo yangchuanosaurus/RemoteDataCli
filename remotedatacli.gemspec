@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.email       = '355592261@qq.com'
   #s.files       = Dir['lib/   *.rb'] + Dir['bin/*'] + Dir['templates/*']
   s.files       = `git ls-files`.split("\n")
+  s.require_paths << 'templates' # template resources
 
   s.executables << 'remotedatacli'
   s.homepage    =

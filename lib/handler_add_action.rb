@@ -40,7 +40,7 @@ module RemoteDataCli
 		private
 			def create_action(path, http_method, action_file_path, action_file_request_path, action_file_response_path)
 				begin
-					template_content = Template.load('templates/action_conf.json')
+					template_content = Template.load('action_conf.json')
 					action_content = template_content.gsub('$path', path)
 					action_content = action_content.gsub('$http_method', http_method)
 					action_content = action_content.gsub('$response_conf', action_file_response_path)
@@ -55,13 +55,13 @@ module RemoteDataCli
 			end
 
 			def create_action_request(action_file_request_path)
-				template_content = Template.load('templates/action_request_conf.json')
+				template_content = Template.load('action_request_conf.json')
 				Core::FileIO.init_file(action_file_request_path, template_content)
 				puts "\t#{action_file_request_path} created."
 			end
 
 			def create_action_response(action_file_response_path)
-				template_content = Template.load('templates/action_response_conf.json')
+				template_content = Template.load('action_response_conf.json')
 				Core::FileIO.init_file(action_file_response_path, template_content)
 				puts "\t#{action_file_response_path} created."
 			end
