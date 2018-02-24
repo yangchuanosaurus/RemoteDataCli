@@ -13,7 +13,7 @@ module RemoteDataCli
 	RemoteDataCli::Accept_commands_argv_size = {
 		"new" => 2, 
 		"add_action" => 3, 
-		"run" => 2 # cli run rest misc_get
+		"run" => 3 # cli run qa get /rest/events
 	}
 
 	class Command

@@ -6,21 +6,20 @@ module RemoteDataCli
 	class RunAction < Handler
 
 		def execute
-			raise StandardError.new("Usage: RemoteDataCli run root_path path method action") until @command.parameters.size >= 2
+			raise StandardError.new("Usage: RemoteDataCli run qa method /{path}/action") until @command.parameters.size >= 3
 
-			path_array = ["actions"]
-			@command.parameters[0...-2].each { |path| path_array << path }
+			host_alias = @command.parameters[0]
+			http_method = @command.parameters[1]
+			path = "actions#{@command.parameters[2]}"
 			
-			path = path_array.join("/")
-			http_method = @command.parameters[-2]
-			action = @command.parameters[-1]
+			action = path.split('/')[-1]
 
-			run_action(path, http_method, action)
+			run_action(host_alias, path, http_method)
 
 		end
 
-		def run_action(path, http_method, action)
-			Run::Action.new(path, action, http_method).run
+		def run_action(host_alias, path, http_method)
+			Run::Action.new(host_alias, path, http_method).run
 		end
 
 	end

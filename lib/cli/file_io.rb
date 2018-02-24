@@ -1,3 +1,5 @@
+require 'json'
+
 module RemoteDataCli
 	module Core
 		class FileIO
@@ -30,6 +32,11 @@ module RemoteDataCli
 
 			def self.load_content(file)
 				File.read(file)
+			end
+
+			def self.load_project
+				content = File.read("project.json")
+				JSON.parse(content)
 			end
 		end
 	end

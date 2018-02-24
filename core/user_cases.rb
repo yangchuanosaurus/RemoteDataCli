@@ -21,7 +21,7 @@ project.run_action("qa_login_url", :post, "/login")
 
 # Run action test
 project.run_action("qa_url", :post, "/events")
-remotedatacli run qa_url post events
+remotedatacli run qa_url post /rest/events
 
 # Run all tests
 project.run_actions
