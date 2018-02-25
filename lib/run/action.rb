@@ -35,10 +35,42 @@ module RemoteDataCli
 					params = data_hash['queries']
 
 					url = "#{url}#{path}"
-					api = RemoteDataCli::Api::ClientApi.new
-					api.get(url, path, headers, params)
+					connect(url, path, headers, params)
 
 					"run #{http_method} #{path} done."
+				end
+			end
+
+			def connect(url, path, headers, params)
+				api = RemoteDataCli::Api::ClientApi.new
+				resp = api.get(url, path, headers, params)
+
+				resp_body = JSON.parse(resp.body)
+				
+				manipulate_hash(resp_body)
+			end
+
+			def manipulate_hash(data_hash)
+				data_hash.map do |key, value|
+					puts "#{key} : #{value.class}"
+					if value.is_a?(Hash)
+						p "#{key} mapping"
+						manipulate_hash(value)
+					elsif value.is_a?(Array)
+						manipulate_array(value)
+					end
+				end
+			end
+
+			def manipulate_array(data_array)
+				data_array.each do |value|
+					if value.is_a?(Hash)
+						manipulate_hash(value)
+					elsif value.is_a?(Array)
+						manipulate_array(value)
+					else
+						p "directly mapping as #{value} : #{value.class}"
+					end
 				end
 			end
 		end
