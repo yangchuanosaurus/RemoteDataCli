@@ -47,9 +47,11 @@ module RemoteDataCli
 				api = RemoteDataCli::Api::ClientApi.new
 				resp = api.get(url, path, headers, params)
 
-				model_mapping = RemoteDataCli::Mapping::Manipulate.new.generate(@action, resp.body)
+				model_mapping = RemoteDataCli::Mapping::Manipulate.new(@action).generate(resp.body)
 				puts "======Mapping======"
-				puts model_mapping
+				model_mapping.map do |key, value|
+					puts "===#{key}->\n\t#{value}"
+				end
 			end
 		end
 	end
