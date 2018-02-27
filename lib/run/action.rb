@@ -2,6 +2,7 @@ require 'json'
 
 require_relative '../cli/file_io'
 require_relative '../api/api'
+require_relative '../manipulate/manipulate'
 
 module RemoteDataCli
 	module Run
@@ -9,6 +10,7 @@ module RemoteDataCli
 			def initialize(host_alias, path, http_method)
 				@host_alias = host_alias
 				@path = path
+				@action = path.split('/')[-1]
 				@http_method = http_method
 
 				@action_file = "#{path}_#{http_method}.json"
@@ -45,33 +47,9 @@ module RemoteDataCli
 				api = RemoteDataCli::Api::ClientApi.new
 				resp = api.get(url, path, headers, params)
 
-				resp_body = JSON.parse(resp.body)
-				
-				manipulate_hash(resp_body)
-			end
-
-			def manipulate_hash(data_hash)
-				data_hash.map do |key, value|
-					puts "#{key} : #{value.class}"
-					if value.is_a?(Hash)
-						p "#{key} mapping"
-						manipulate_hash(value)
-					elsif value.is_a?(Array)
-						manipulate_array(value)
-					end
-				end
-			end
-
-			def manipulate_array(data_array)
-				data_array.each do |value|
-					if value.is_a?(Hash)
-						manipulate_hash(value)
-					elsif value.is_a?(Array)
-						manipulate_array(value)
-					else
-						p "directly mapping as #{value} : #{value.class}"
-					end
-				end
+				model_mapping = RemoteDataCli::Mapping::Manipulate.new.generate(@action, resp.body)
+				puts "======Mapping======"
+				puts model_mapping
 			end
 		end
 	end
