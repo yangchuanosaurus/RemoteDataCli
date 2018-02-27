@@ -2,23 +2,20 @@ require 'json'
 
 require_relative '../cli/file_io'
 require_relative '../api/api'
-require_relative '../manipulate/manipulate'
 
 module RemoteDataCli
 	module Run
-		class Action
-			def initialize(host_alias, path, http_method)
+		class AllAction
+			def initialize(host_alias, path)
 				@host_alias = host_alias
 				@path = path
-				@action = path.split('/')[-1]
-
-				@action_file = "#{path}_#{http_method}.json"
 			end
 
 			def run
-				if !Core::FileIO.file_exists?(@action_file)
-					puts "#{@action_file} doesn't exists."
+				if !Core::FileIO.file_exists?(@path)
+					puts "#{@path} doesn't exists."
 				else
+
 					project = RemoteDataCli::Core::FileIO.load_project
 					url = project["hosts"][@host_alias]
 
@@ -26,7 +23,7 @@ module RemoteDataCli
 						return "Cannot found the url of #{@host_alias} from project.json."
 					end
 
-					content = RemoteDataCli::Core::FileIO.load_content(@action_file)
+					content = RemoteDataCli::Core::FileIO.load_content(@path)
 					data_hash = JSON.parse(content)
 
 					http_method = data_hash['http_method']
@@ -35,9 +32,10 @@ module RemoteDataCli
 					headers = data_hash['headers']
 					params = data_hash['queries']
 
-					connect(url, path, headers, params)
+					resp_code = connect(url, path, headers, params)
 
-					"run #{http_method} #{path} done."
+					puts "run #{http_method} #{path} with response code #{resp_code}."
+
 				end
 			end
 
@@ -45,13 +43,9 @@ module RemoteDataCli
 				api = RemoteDataCli::Api::ClientApi.new
 				resp = api.get(url, path, headers, params)
 				
-				p resp.body
-				model_mapping = RemoteDataCli::Mapping::Manipulate.new(@action).generate(resp.body)
-				puts "======Mapping======"
-				model_mapping.map do |key, value|
-					puts "===#{key}"
-				end
+				resp.code
 			end
+
 		end
 	end
 end

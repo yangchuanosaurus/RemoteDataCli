@@ -6,7 +6,7 @@ module RemoteDataCli
 	class RunAction < Handler
 
 		def execute
-			raise StandardError.new("Usage: RemoteDataCli run qa method /{path}/action") until @command.parameters.size >= 3
+			raise StandardError.new("Usage: RemoteDataCli run_action qa method /{path}/action") until @command.parameters.size >= 3
 
 			host_alias = @command.parameters[0]
 			http_method = @command.parameters[1]
@@ -15,7 +15,6 @@ module RemoteDataCli
 			action = path.split('/')[-1]
 
 			run_action(host_alias, path, http_method)
-
 		end
 
 		def run_action(host_alias, path, http_method)

@@ -4,12 +4,6 @@ project.create
 
 remotedatacli create app
 
-# Set host url
-project.add_host_url("product_url", "http://www.xyz.com")
-project.add_host_url("qa_url", "http://qa.xyz.com")
-
-remotedatacli add host product_url=http://www.xyz.com qa_url=http://qa.xyz.com
-
 # Add restful action
 project.add_action(:post, "/events", headers = [], requests = {})
 ??? remotedatacli add action post "/events" headers=a=b
