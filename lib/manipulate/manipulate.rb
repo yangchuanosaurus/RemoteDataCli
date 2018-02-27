@@ -50,10 +50,13 @@ module RemoteDataCli
 				end
 
 				def manipulate_hash(name, data_hash, parent_name = nil)
+					p_name = parent_name.nil? ? name : "#{upcase(parent_name)}#{upcase(name)}"
+
 					data_hash.keys.each do |key|
 						value = data_hash[key]
 						if value.is_a?(Hash)
-							add_field(name, Field.new(key, model_name(join_name(key, name))), parent_name)
+							model_name = "#{name}"
+							add_field(name, Field.new(key, model_name(join_name(key, p_name))), parent_name)
 						elsif value.is_a?(Array)
 							model_name = "#{name}#{upcase(key)}Item"
 							add_field(name, FieldArray.new(key, join_name(model_name(model_name), parent_name)), parent_name)
@@ -64,9 +67,8 @@ module RemoteDataCli
 
 					data_hash.map do |key, value|
 						if value.is_a?(Hash)
-							manipulate_hash(key, value, name)
+							manipulate_hash(key, value, p_name)
 						elsif value.is_a?(Array)
-							p_name = parent_name.nil? ? name : "#{upcase(parent_name)}#{upcase(name)}"
 							model_name = "#{upcase(key)}Item"
 							
 							manipulate_array("#{model_name}", value, p_name)
@@ -75,13 +77,15 @@ module RemoteDataCli
 				end
 
 				def manipulate_array(name, data_array, parent_name)
+					p_name = parent_name.nil? ? name : "#{upcase(parent_name)}"
+					
 					data_array.each do |value|
 						
 						if value.is_a?(Hash)
-							manipulate_hash(name, value, upcase(parent_name))
+							manipulate_hash(name, value, p_name)
 						elsif value.is_a?(Array)
 							model_name = "#{upcase(name)}Item"
-							manipulate_array(name, value, join_name(name, parent_name))
+							manipulate_array(name, value, join_name(name, p_name))
 						else
 							add_field(name, Field.new(model_name(value), "Array"))
 						end

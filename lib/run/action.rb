@@ -36,7 +36,6 @@ module RemoteDataCli
 					headers = data_hash['headers']
 					params = data_hash['queries']
 
-					url = "#{url}#{path}"
 					connect(url, path, headers, params)
 
 					"run #{http_method} #{path} done."
@@ -46,7 +45,7 @@ module RemoteDataCli
 			def connect(url, path, headers, params)
 				api = RemoteDataCli::Api::ClientApi.new
 				resp = api.get(url, path, headers, params)
-
+				p resp.body
 				model_mapping = RemoteDataCli::Mapping::Manipulate.new(@action).generate(resp.body)
 				puts "======Mapping======"
 				model_mapping.map do |key, value|

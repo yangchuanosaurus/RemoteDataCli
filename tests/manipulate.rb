@@ -78,12 +78,13 @@ end
 
 def manipulate_hash(name, data_hash, parent_name = nil)
 	#p "manipulate hash of #{name}.model"
+	p_name = parent_name.nil? ? name : "#{upcase(parent_name)}#{upcase(name)}"
 	data_hash.keys.each do |key|
 		value = data_hash[key]
-		#puts "---value=#{value}, name=#{name}, pname=#{parent_name}"
+		puts "hash---name=#{name}, parent_name=#{parent_name}, pname=#{p_name}, key=#{key} => #{join_name(key, name)}"
 		if value.is_a?(Hash)
-			#puts "hash---name=#{name}, pname=#{parent_name}, key=#{key} => #{join_name(key, name)}"
-			add_field(name, Field.new(key, model_name(join_name(key, name))), parent_name)
+			model_name = "#{name}"
+			add_field(name, Field.new(key, model_name(join_name(key, p_name))), parent_name)
 		elsif value.is_a?(Array)
 			model_name = "#{name}#{upcase(key)}Item"
 			add_field(name, FieldArray.new(key, join_name(model_name(model_name), parent_name)), parent_name)
@@ -94,11 +95,11 @@ def manipulate_hash(name, data_hash, parent_name = nil)
 
 	data_hash.map do |key, value|
 		if value.is_a?(Hash)
-			manipulate_hash(key, value, name)
+			#p "===#{key} #{p_name}"
+			manipulate_hash(key, value, p_name)
 		elsif value.is_a?(Array)
-			p_name = parent_name.nil? ? name : "#{upcase(parent_name)}#{upcase(name)}"
 			model_name = "#{upcase(key)}Item"
-			puts "===key=#{key}, name=#{name}, #{join_name(model_name, p_name)}, pname=#{parent_name}"
+			#puts "===key=#{key}, name=#{name}, #{join_name(model_name, p_name)}, pname=#{parent_name}"
 			
 			manipulate_array("#{model_name}", value, p_name)
 		end
@@ -106,14 +107,16 @@ def manipulate_hash(name, data_hash, parent_name = nil)
 end
 
 def manipulate_array(name, data_array, parent_name)
+	p_name = parent_name.nil? ? name : "#{upcase(parent_name)}"
+
 	data_array.each do |value|
 		
 		if value.is_a?(Hash)
-			manipulate_hash(name, value, upcase(parent_name))
+			manipulate_hash(name, value, p_name)
 		elsif value.is_a?(Array)
 			model_name = "#{upcase(name)}Item"
-			puts "===value=#{value}, name=#{name}, pname=#{parent_name}"
-			manipulate_array(name, value, join_name(name, parent_name))
+			puts "===value=#{value}, name=#{name}, parent_name=#{parent_name}, pname=#{p_name}"
+			manipulate_array(name, value, join_name(name, p_name))
 		else
 			add_field(name, Field.new(model_name(value), "Array"))
 		end
@@ -204,6 +207,98 @@ json_mix = %Q{
 		}]
 	}
 }
+}
+
+json_mix_2 = %Q{{
+	"success": true,
+	"results": {
+		"getEvents": {
+			"keyword": "5k",
+			"events": [{
+				"metaInterestNames": [],
+				"assetTopics": [{
+					"topicName": "Running",
+					"topicTaxonomy": "Endurance/Running"
+				}],
+				"eventId": "E-01SH5K22",
+				"regStatus": "reg-unavailable",
+				"assetTypeId": "dfaa997a-d591-44ca-9fb7-bf4a4c8984f1",
+				"city": "Reeds Spring",
+				"assetId": "4e9c83fc-15f7-42d6-8df8-5a105b2b0968",
+				"latitude": "36.731504",
+				"eventName": "5K - 5k",
+				"state": "MO",
+				"eventDate": "09/01/2018",
+				"longitude": "-93.37734"
+			}, {
+				"metaInterestNames": [],
+				"assetTopics": [{
+					"topicName": "Running",
+					"topicTaxonomy": "Endurance/Running"
+				}],
+				"eventId": "E-01SYFWZ0",
+				"regStatus": "reg-unavailable",
+				"assetTypeId": "dfaa997a-d591-44ca-9fb7-bf4a4c8984f1",
+				"city": "Salina",
+				"assetId": "c8295c6b-b88c-4f2a-b411-967e07b73cd9",
+				"latitude": "38.884986",
+				"eventName": "Running-5K - Running/5K",
+				"state": "KS",
+				"eventDate": "04/21/2018",
+				"longitude": "-97.593804"
+			}, {
+				"metaInterestNames": [],
+				"assetTopics": [{
+					"topicName": "Running",
+					"topicTaxonomy": "Endurance/Running"
+				}],
+				"eventId": "E-01QLC7FB",
+				"regStatus": "reg-unavailable",
+				"assetTypeId": "dfaa997a-d591-44ca-9fb7-bf4a4c8984f1",
+				"city": "Wichita",
+				"assetId": "43a392bd-058c-40e0-8707-013346136003",
+				"latitude": "37.682003",
+				"eventName": "5K - 5K",
+				"state": "KS",
+				"eventDate": "05/06/2018",
+				"longitude": "-97.34063"
+			}, {
+				"metaInterestNames": [],
+				"assetTopics": [{
+					"topicName": "Running",
+					"topicTaxonomy": "Endurance/Running"
+				}],
+				"eventId": "E-01QLC7FB",
+				"regStatus": "reg-unavailable",
+				"assetTypeId": "dfaa997a-d591-44ca-9fb7-bf4a4c8984f1",
+				"city": "Wichita",
+				"assetId": "8f57a873-3ed2-4961-bee4-da82d3a6c449",
+				"latitude": "37.682003",
+				"eventName": "5K - 5K",
+				"state": "KS",
+				"eventDate": "05/06/2018",
+				"longitude": "-97.34063"
+			}, {
+				"metaInterestNames": [],
+				"assetTopics": [{
+					"topicName": "Running",
+					"topicTaxonomy": "Endurance/Running"
+				}],
+				"eventId": "E-01QJF662",
+				"regStatus": "reg-unavailable",
+				"assetTypeId": "dfaa997a-d591-44ca-9fb7-bf4a4c8984f1",
+				"city": "Wichita",
+				"assetId": "0dac172a-e825-45f8-94b4-8cb6824e1ada",
+				"latitude": "37.682003",
+				"eventName": "5K - 5K",
+				"state": "KS",
+				"eventDate": "10/14/2018",
+				"longitude": "-97.34063"
+			}],
+			"eventNum": 5
+		}
+	}
+}	
 }
 
 resp_body = JSON.parse(json_mix)
